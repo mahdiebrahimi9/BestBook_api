@@ -2,13 +2,12 @@
 using Common.Domain.Exceptions;
 using Shop.Domain.UserAgg.Enums;
 using Shop.Domain.UserAgg.Services;
-using System.Reflection.Metadata;
 
 namespace Shop.Domain.UserAgg
 {
     public class User : AggregateRoot
     {
-
+        private User() { }
         public User(string name, string family, string phoneNumber, string password, string email, Gender gender, IDomainUserService domainService)
         {
             Guard(phoneNumber, email, domainService);
@@ -78,8 +77,9 @@ namespace Shop.Domain.UserAgg
             Wallets.Add(wallet);
         }
 
-        public void Role(List<UserRole> roles)
+        public void SetRoles(List<UserRole> roles)
         {
+            roles.ForEach(f => f.UserId = Id);
             Roles.Clear();
             Roles.AddRange(roles);
         }
