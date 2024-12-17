@@ -1,23 +1,24 @@
 ﻿using Common.Domain;
 using Common.Domain.Exceptions;
 using Shop.Domain.UserAgg.Enums;
+using Shop.Domain.UserAgg.Services;
+using System.Reflection.Metadata;
 
 namespace Shop.Domain.UserAgg
 {
     public class User : AggregateRoot
     {
 
-        public User(string name, string family, string phoneNumber, string password, string email, Gender gender)
+        public User(string name, string family, string phoneNumber, string password, string email, Gender gender, IDomainUserService domainService)
         {
+            Guard(phoneNumber, email, domainService);
+
             Name = name;
             Family = family;
             PhoneNumber = phoneNumber;
             Password = password;
             Email = email;
             Gender = gender;
-            Addresses = new List<UserAddress>();
-            Wallets = new List<Wallet>();
-            Roles = new List<UserRole>();
         }
 
         public string Name { get; private set; }
@@ -31,13 +32,19 @@ namespace Shop.Domain.UserAgg
         public List<UserRole> Roles { get; private set; }
 
 
-        public void Edit(string name, string family, string phoneNumber, string email, Gender gender)
+        public void Edit(string name, string family, string phoneNumber, string email, Gender gender, IDomainUserService domainService)
         {
+            Guard(phoneNumber, email, domainService);
             Name = name;
             Family = family;
             PhoneNumber = phoneNumber;
             Email = email;
             Gender = gender;
+        }
+
+        public static User RegisterUser(string name, string family, string phoneNumber, string password, string email, Gender gender, IDomainUserService domainService)
+        {
+            return new User("", "", phoneNumber, password, email, Gender.None, domainService);
         }
 
         public void AddAddress(UserAddress address)
@@ -75,6 +82,26 @@ namespace Shop.Domain.UserAgg
         {
             Roles.Clear();
             Roles.AddRange(roles);
+        }
+
+        public void Guard(string phoneNumber, string email, IDomainUserService domainService)
+        {
+            NullOrEmptyDomainDataException.CheckString(phoneNumber, nameof(phoneNumber));
+            NullOrEmptyDomainDataException.CheckString(email, nameof(email));
+
+            if (phoneNumber.Length != 11)
+                throw new InvalidDomainDataException("شماره موبایل نامعتبر است");
+
+            if (email.IsValidEmail() == false)
+                throw new InvalidDomainDataException("ایمبل نامعتبر است");
+
+            if (phoneNumber != PhoneNumber)
+                if (domainService.PhoneNumberIsExist(phoneNumber))
+                    throw new InvalidDomainDataException("شماره موبایل تکراری است");
+
+            if (email != Email)
+                if (domainService.IsEmailExist(email))
+                    throw new InvalidDomainDataException("ایمیل تکراری است");
         }
     }
 }
