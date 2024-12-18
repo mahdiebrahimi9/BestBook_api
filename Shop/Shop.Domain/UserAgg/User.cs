@@ -57,7 +57,7 @@ namespace Shop.Domain.UserAgg
             var oldAddress = Addresses.FirstOrDefault(f => f.Id == address.UserId);
 
             if (oldAddress == null)
-                throw new NullOrEmptyDomainDataException("Address Not Found");
+                throw new NullOrEmptyDomainDataException("آدرس پیدا نشد");
 
             Addresses.Remove(oldAddress);
         }
@@ -66,7 +66,7 @@ namespace Shop.Domain.UserAgg
         {
             var oldAddress = Addresses.FirstOrDefault(f => f.Id == address.UserId);
             if (oldAddress == null)
-                throw new NullOrEmptyDomainDataException("Address Not Found");
+                throw new NullOrEmptyDomainDataException("آدرس پیدا نشد");
 
             Addresses.Remove(oldAddress);
             Addresses.Add(address);
@@ -74,6 +74,7 @@ namespace Shop.Domain.UserAgg
 
         public void ChargeWallet(Wallet wallet)
         {
+            wallet.UserId = Id;
             Wallets.Add(wallet);
         }
 
