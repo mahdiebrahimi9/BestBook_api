@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="OrderAgg\Events\" />
+    <Folder Include="SellerAgg\Enums\" />
   </ItemGroup>
 
 </Project>
