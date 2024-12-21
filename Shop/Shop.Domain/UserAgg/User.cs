@@ -41,7 +41,7 @@ namespace Shop.Domain.UserAgg
             Gender = gender;
         }
 
-        public static User RegisterUser(string name, string family, string phoneNumber, string password, string email, Gender gender, IDomainUserService domainService)
+        public static User CreateEmptyUser(string name, string family, string phoneNumber, string password, string email, Gender gender, IDomainUserService domainService)
         {
             return new User("", "", phoneNumber, password, email, Gender.None, domainService);
         }
@@ -62,7 +62,7 @@ namespace Shop.Domain.UserAgg
             Addresses.Remove(oldAddress);
         }
 
-        public void EditAddress(UserAddress address)
+        public void UpdateAddress(UserAddress address)
         {
             var oldAddress = Addresses.FirstOrDefault(f => f.Id == address.UserId);
             if (oldAddress == null)
