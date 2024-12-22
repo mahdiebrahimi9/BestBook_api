@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CommentAgg\" />
     <Folder Include="OrderAgg\Events\" />
   </ItemGroup>
 
