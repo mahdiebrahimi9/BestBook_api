@@ -5,7 +5,7 @@ namespace Shop.Domain.OrderAgg
 {
     public class OrderItem : BaseEntity
     {
-        public OrderItem(int inventoryId, int count, int price)
+        public OrderItem(long inventoryId, int count, int price)
         {
             CountGuard(count);
             PriceGuard(price);
@@ -16,7 +16,7 @@ namespace Shop.Domain.OrderAgg
         }
 
         public long OrderId { get; internal set; }
-        public int InventoryId { get; private set; }
+        public long InventoryId { get; private set; }
         public int Count { get; private set; }
         public int Price { get; private set; }
         public int TotalPrice => Price * Count;
