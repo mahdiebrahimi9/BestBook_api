@@ -1,5 +1,6 @@
 ﻿using Common.Domain;
 using Common.Domain.Exceptions;
+using System.Security.AccessControl;
 
 namespace Shop.Domain.OrderAgg
 {
@@ -20,6 +21,24 @@ namespace Shop.Domain.OrderAgg
         public int Count { get; private set; }
         public int Price { get; private set; }
         public int TotalPrice => Price * Count;
+
+        public void IncreaseCount(int count)
+        {
+            Count += count;
+        }
+        public void DecreaseCount(int count)
+        {
+            if (count == 1)
+            {
+                return;
+            }
+
+            if (count <= 0)
+            {
+                return;
+            }
+            Count -= count;
+        }
 
         public void ChangeCount(int newCount)
         {

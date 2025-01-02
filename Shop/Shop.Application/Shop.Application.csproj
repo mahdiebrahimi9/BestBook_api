@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Orders\ChangeCount\" />
-    <Folder Include="Orders\RemoveItem\" />
+    <Compile Remove="Orders\ChangeCount\**" />
+    <EmbeddedResource Remove="Orders\ChangeCount\**" />
+    <None Remove="Orders\ChangeCount\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Products\Create\" />
     <Folder Include="Products\Edit\" />
     <Folder Include="Products\AddImage\" />
