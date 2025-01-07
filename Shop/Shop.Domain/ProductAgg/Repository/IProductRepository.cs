@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Domain.ProductAgg.Repository
 {
-    internal interface IProductRepository : IBaseRepository<Product>
+    public interface IProductRepository : IBaseRepository<Product>
     {
     }
 }
