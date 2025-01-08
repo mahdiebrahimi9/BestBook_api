@@ -24,13 +24,13 @@ namespace Shop.Application.Products.Create
             var imageName = await _fileService.SaveFileAndGenerateName(request.ImageFile, Directories.ProductImage);
             var product = new Product(request.Title, imageName, request.Description, request.CategoryId, request.SubCategoryId
                 , request.SecondarySubCategoryId, request.Slug, request.SeoData, _productDomainService);
-            
+
             _productRepository.Add(product);
 
             var specifcations = new List<ProductSpecification>();
             request.Specifications.ToList().ForEach(specification =>
             {
-                specifcations.Add(new ProductSpecification(specifcations.Key, specifcations.Value));
+                specifcations.Add(new ProductSpecification(specification.Key, specification.Value));
             });
             product.SetSpecification(specifcations);
             await _productRepository.Save();
