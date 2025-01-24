@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Orders\RemoveItem\" />
-    <Folder Include="Products\Edit\" />
+    <Folder Include="Products\Create\" />
     <Folder Include="Products\AddImage\" />
     <Folder Include="Products\RemoveImage\" />
     <Folder Include="Roles\Create\" />
