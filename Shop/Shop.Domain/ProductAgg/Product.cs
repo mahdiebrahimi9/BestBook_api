@@ -57,13 +57,14 @@ namespace Shop.Domain.ProductAgg
             Images.Add(image);
         }
 
-        public void RemoveImage(long imageId)
+        public string RemoveImage(long imageId)
         {
             var currentImage = Images.FirstOrDefault(i => i.Id == imageId);
             if (currentImage == null)
-                throw new InvalidDomainDataException("عکس یافت نشد");
+                throw new NullOrEmptyDomainDataException("عکس یافت نشد");
 
             Images.Remove(currentImage);
+            return currentImage.ImageName;
         }
 
         public void SetSpecification(List<ProductSpecification> specifications)
