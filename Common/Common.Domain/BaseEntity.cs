@@ -7,7 +7,7 @@
             CreationDate = DateTime.Now;
         }
 
-        public long Id { get; private set; }
+        public long Id { get; protected set; }
         public DateTime CreationDate { get; }
 
     }

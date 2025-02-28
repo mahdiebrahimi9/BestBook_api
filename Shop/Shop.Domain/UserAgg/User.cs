@@ -18,6 +18,7 @@ namespace Shop.Domain.UserAgg
             Password = password;
             Email = email;
             Gender = gender;
+            AvatarName = "avatar.png";
         }
 
         public string Name { get; private set; }
@@ -26,6 +27,7 @@ namespace Shop.Domain.UserAgg
         public string Password { get; private set; }
         public string Email { get; private set; }
         public Gender Gender { get; private set; }
+        public string AvatarName { get; private set; }
         public List<UserAddress> Addresses { get; private set; }
         public List<Wallet> Wallets { get; private set; }
         public List<UserRole> Roles { get; private set; }
@@ -41,9 +43,16 @@ namespace Shop.Domain.UserAgg
             Gender = gender;
         }
 
-        public static User RegisterUser(string name, string family, string phoneNumber, string password, string email, Gender gender, IDomainUserService domainService)
+        public void SetAvatar(string imageName)
         {
-            return new User("", "", phoneNumber, password, email, Gender.None, domainService);
+            if (string.IsNullOrWhiteSpace(imageName))
+                imageName = "avatar.png";
+            AvatarName = imageName;
+
+        }
+        public static User RegisterUser( string phoneNumber, string password,  IDomainUserService domainService)
+        {
+            return new User("", "", phoneNumber, password, null, Gender.None, domainService);
         }
 
         public void AddAddress(UserAddress address)
@@ -52,24 +61,22 @@ namespace Shop.Domain.UserAgg
             Addresses.Add(address);
         }
 
-        public void RemoveAddress(UserAddress address)
+        public void RemoveAddress(long addressId)
         {
-            var oldAddress = Addresses.FirstOrDefault(f => f.Id == address.UserId);
+            var oldAddress = Addresses.FirstOrDefault(f => f.Id == addressId);
 
             if (oldAddress == null)
                 throw new NullOrEmptyDomainDataException("آدرس پیدا نشد");
-
             Addresses.Remove(oldAddress);
         }
 
-        public void EditAddress(UserAddress address)
+        public void EditAddress(UserAddress address, long addressId)
         {
-            var oldAddress = Addresses.FirstOrDefault(f => f.Id == address.UserId);
+            var oldAddress = Addresses.FirstOrDefault(f => f.Id == addressId);
             if (oldAddress == null)
                 throw new NullOrEmptyDomainDataException("آدرس پیدا نشد");
-
-            Addresses.Remove(oldAddress);
-            Addresses.Add(address);
+            oldAddress.Edit(address.Shire, address.City, address.PostalCode, address.Name, address.Family, address.PostalAddress, address.PhoneNumber
+            , address.NationalCode);
         }
 
         public void ChargeWallet(Wallet wallet)

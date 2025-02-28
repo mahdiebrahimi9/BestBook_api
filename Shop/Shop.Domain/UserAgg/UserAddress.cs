@@ -1,15 +1,16 @@
 ﻿using Common.Domain;
 using Common.Domain.Exceptions;
+using Common.Domain.ValueObjects;
 
 namespace Shop.Domain.UserAgg
 {
     public class UserAddress : BaseEntity
     {
         public UserAddress(string shire, string city, string postalCode, string name
-            , string family, string postalAddress, string phoneNumber, string nationalCode)
+            , string family, string postalAddress, PhoneNumber phoneNumber, string nationalCode)
         {
-            Guard(shire, city, postalCode, name, family, postalAddress,
-              phoneNumber, nationalCode);
+            Guard(shire, city, postalCode, name, family, postalAddress, phoneNumber
+              , nationalCode);
 
             Shire = shire;
             City = city;
@@ -29,12 +30,12 @@ namespace Shop.Domain.UserAgg
         public string Name { get; private set; }
         public string Family { get; private set; }
         public string PostalAddress { get; private set; }
-        public string PhoneNumber { get; private set; }
+        public PhoneNumber PhoneNumber { get; private set; }
         public string NationalCode { get; private set; }
         public bool ActiveAddress { get; private set; }
 
         public void Edit(string shire, string city, string postalCode, string name
-            , string family, string postalAddress, string phoneNumber, string nationalCode)
+            , string family, string postalAddress, PhoneNumber phoneNumber, string nationalCode)
         {
             Guard(shire, city, postalCode, name, family, postalAddress,
                 phoneNumber, nationalCode);
@@ -55,15 +56,16 @@ namespace Shop.Domain.UserAgg
         }
 
         public void Guard(string shire, string city, string postalCode, string name
-            , string family, string postalAddress, string phoneNumber, string nationalCode)
+            , string family, string postalAddress, PhoneNumber phoneNumber, string nationalCode)
         {
+            if (phoneNumber == null)
+                throw new NullOrEmptyDomainDataException();
             NullOrEmptyDomainDataException.CheckString(shire, nameof(shire));
             NullOrEmptyDomainDataException.CheckString(city, nameof(city));
             NullOrEmptyDomainDataException.CheckString(postalCode, nameof(postalCode));
             NullOrEmptyDomainDataException.CheckString(name, nameof(name));
             NullOrEmptyDomainDataException.CheckString(family, nameof(family));
             NullOrEmptyDomainDataException.CheckString(postalAddress, nameof(postalAddress));
-            NullOrEmptyDomainDataException.CheckString(phoneNumber, nameof(phoneNumber));
             NullOrEmptyDomainDataException.CheckString(nationalCode, nameof(nationalCode));
 
             if (IranianNationalIdChecker.IsValid(nationalCode) == false)
