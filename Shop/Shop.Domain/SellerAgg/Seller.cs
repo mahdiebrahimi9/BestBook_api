@@ -1,6 +1,8 @@
-﻿using Common.Domain;
+﻿using System.Runtime.Intrinsics.Arm;
+using Common.Domain;
 using Common.Domain.Exceptions;
 using Shop.Domain.SellerAgg.Enums;
+using Shop.Domain.SellerAgg.Services;
 
 namespace Shop.Domain.SellerAgg
 {
@@ -14,23 +16,36 @@ namespace Shop.Domain.SellerAgg
         public DateTime? LastUpdate { get; private set; }
 
         private Seller() { }
-        
-        public Seller(long userId, string shopName, string nationalCode)
+
+        public Seller(long userId, string shopName, string nationalCode, ISellerDomainService domainService)
         {
             Guard(shopName, nationalCode);
+
 
             UserId = userId;
             ShopName = shopName;
             NationalCode = nationalCode;
             Inventorys = new List<SellerInventory>();
+
+            if (domainService.CheckSellerInfo(this) == false)
+                throw new InvalidDomainDataException("اطلاعات نامعتبر است");
         }
 
-        public void Edit(string shopName, string nationalCode)
+        public void Edit(string shopName, string nationalCode, SellerStatus status, ISellerDomainService domainService)
         {
             Guard(shopName, nationalCode);
 
+            if (nationalCode != NationalCode)
+            {
+                if (domainService.NationalCodeExistInDataBase(nationalCode))
+                {
+                    throw new InvalidDomainDataException("کد ملی متعلق به شخص دیگری است");
+                }
+            }
+
             ShopName = shopName;
             NationalCode = nationalCode;
+            Status = status;
         }
 
         public void ChangeStatus(SellerStatus status)
@@ -47,25 +62,13 @@ namespace Shop.Domain.SellerAgg
             Inventorys.Add(inventory);
         }
 
-        public void EditInventory(SellerInventory inventory)
+        public void EditInventory(long inventoryId, int count, int price, int? discountPercentage)
         {
-            var oldinventory = Inventorys.FirstOrDefault(i => i.Id == inventory.Id);
-
+            var oldinventory = Inventorys.FirstOrDefault(i => i.Id == inventoryId);
             if (oldinventory == null)
                 throw new InvalidDomainDataException("محصول یافت نشد");
 
-            Inventorys.Remove(oldinventory);
-            Inventorys.Add(inventory);
-        }
-
-        public void RemoveInventory(long inventory)
-        {
-            var currentInventory = Inventorys.FirstOrDefault(i => i.Id == inventory);
-
-            if (currentInventory == null)
-                throw new InvalidDomainDataException("محصول یافت نشد");
-
-            Inventorys.Remove(currentInventory);
+            oldinventory.Edit(count, price, discountPercentage);
         }
 
         public void Guard(string shopName, string nationalCode)

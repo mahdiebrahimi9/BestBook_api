@@ -9,20 +9,23 @@ namespace Shop.Domain.SellerAgg
         public long ProductId { get; private set; }
         public int Count { get; private set; }
         public int Price { get; private set; }
+        public int? PercentageDiscount { get; private set; }
 
-        public SellerInventory(long productId, int count, int price)
+        public SellerInventory(long productId, int count, int price, int? percentageDiscount = null)
         {
             Guard(count, price);
             ProductId = productId;
             Count = count;
             Price = price;
+            PercentageDiscount = percentageDiscount;
         }
 
-        public void Edit(int count, int price)
+        public void Edit(int count, int price, int? percentageDiscount = null)
         {
             Guard(count, price);
             Count = count;
             Price = price;
+            PercentageDiscount = percentageDiscount;
         }
 
         public void Guard(int count, int price)
