@@ -9,10 +9,6 @@
   <ItemGroup>
     <Folder Include="Orders\RemoveItem\" />
     <Folder Include="Products\Create\" />
-    <Folder Include="SiteEntities\Banner\Create\" />
-    <Folder Include="SiteEntities\Banner\Edit\" />
-    <Folder Include="SiteEntities\Slider\Create\" />
-    <Folder Include="SiteEntities\Slider\Edit\" />
     <Folder Include="Users\Create\" />
     <Folder Include="Users\Edit\" />
     <Folder Include="Users\AddAddress\" />
