@@ -11,6 +11,7 @@ namespace Shop.Infrastructure.Persistent.Ef.ProductAgg
 {
     public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
+
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.ToTable("Products", "Product");

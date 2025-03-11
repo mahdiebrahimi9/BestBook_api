@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Persistent.Ef\NewFolder\" />
     <Folder Include="Persistent.Ef\ProductAgg\" />
   </ItemGroup>
 

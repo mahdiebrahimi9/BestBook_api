@@ -13,6 +13,7 @@ namespace Shop.Infrastructure.Persistent.Ef.ProductAgg
     {
         public ProductRepository(ShopContext context) : base(context)
         {
+
         }
 
     }
