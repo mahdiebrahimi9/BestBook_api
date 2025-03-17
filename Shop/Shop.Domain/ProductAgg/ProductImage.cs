@@ -5,6 +5,7 @@ namespace Shop.Domain.ProductAgg
 {
     public class ProductImage : BaseEntity
     {
+        private ProductImage() { }
         public long ProductId { get; internal set; }
         public string ImageName { get; private set; }
         public int Sequence { get; private set; }

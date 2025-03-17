@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Common.Application.FileUtil.Interfaces;
+using Common.Application.FileUtil.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Shop.Domain.CategoryAgg.Repository;
@@ -39,8 +41,10 @@ namespace Shop.Infrastructure
             service.AddTransient<IBannerRepository, BannerRepository>();
             service.AddTransient<ISliderRepository, SliderRepository>();
             service.AddTransient<IUserRepository, UserRepository>();
+            service.AddTransient<IFileService, FileService>();
 
             service.AddTransient(_ => new DapperContext(connectionString));
+
             service.AddDbContext<ShopContext>(option =>
             {
                 option.UseSqlServer(connectionString);

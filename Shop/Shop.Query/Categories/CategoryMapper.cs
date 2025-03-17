@@ -26,7 +26,27 @@ namespace Shop.Query.Categories
             };
         }
 
-        private static List<ChildeCategoryDto> MapChildren(this List<Category> children)
+        public static List<CategoryDto> Map(this List<Category>? category)
+        {
+
+            var model = new List<CategoryDto>();
+            category.ForEach(category =>
+            {
+                model.Add(new CategoryDto()
+                {
+                    Id = category.Id,
+                    SeoData = category.SeoData,
+                    CreationData = category.CreationDate,
+                    Slug = category.Slug,
+                    Title = category.Title,
+                    Childs = category.Childs.MapChildren()
+
+                });
+            });
+            return model;
+        }
+
+        public static List<ChildeCategoryDto> MapChildren(this List<Category> children)
         {
             var model = new List<ChildeCategoryDto>();
             children.ForEach(c =>

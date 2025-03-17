@@ -15,6 +15,8 @@ namespace Shop.Infrastructure.Persistent.Ef.ProductAgg
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.ToTable("Products", "Product");
+
+            builder.OwnsOne(f => f.SeoData);
         }
     }
 }

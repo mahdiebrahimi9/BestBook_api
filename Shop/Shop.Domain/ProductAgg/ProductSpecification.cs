@@ -5,7 +5,7 @@ namespace Shop.Domain.ProductAgg
 {
     public class ProductSpecification : BaseEntity
     {
-
+        private ProductSpecification() { }
         public long ProductId { get; internal set; }
         public string Key { get;  set; }
         public string Value { get;  set; }

@@ -11,6 +11,7 @@ namespace Shop.Domain.CommentAgg
 {
     public class Comment : AggregateRoot
     {
+        private Comment() { }
         public long UserId { get; private set; }
         public string Text { get; private set; }
         public long ProductId { get; private set; }

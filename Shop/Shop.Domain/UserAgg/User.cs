@@ -8,9 +8,9 @@ namespace Shop.Domain.UserAgg
     public class User : AggregateRoot
     {
         private User() { }
-        public User(string name, string family, string phoneNumber, string password, string email, Gender gender, IDomainUserService domainService)
+        public User(string name, string family, string phoneNumber, string password, string email, Gender gender, IUserDomainService userDomainService)
         {
-            Guard(phoneNumber, email, domainService);
+            Guard(phoneNumber, email, userDomainService);
 
             Name = name;
             Family = family;
@@ -33,9 +33,9 @@ namespace Shop.Domain.UserAgg
         public List<UserRole> Roles { get; private set; }
 
 
-        public void Edit(string name, string family, string phoneNumber, string email, Gender gender, IDomainUserService domainService)
+        public void Edit(string name, string family, string phoneNumber, string email, Gender gender, IUserDomainService userDomainService)
         {
-            Guard(phoneNumber, email, domainService);
+            Guard(phoneNumber, email, userDomainService);
             Name = name;
             Family = family;
             PhoneNumber = phoneNumber;
@@ -50,9 +50,9 @@ namespace Shop.Domain.UserAgg
             AvatarName = imageName;
 
         }
-        public static User RegisterUser( string phoneNumber, string password,  IDomainUserService domainService)
+        public static User RegisterUser( string phoneNumber, string password,  IUserDomainService userDomainService)
         {
-            return new User("", "", phoneNumber, password, null, Gender.None, domainService);
+            return new User("", "", phoneNumber, password, null, Gender.None, userDomainService);
         }
 
         public void AddAddress(UserAddress address)
@@ -92,7 +92,7 @@ namespace Shop.Domain.UserAgg
             Roles.AddRange(roles);
         }
 
-        public void Guard(string phoneNumber, string email, IDomainUserService domainService)
+        public void Guard(string phoneNumber, string email, IUserDomainService userDomainService)
         {
             NullOrEmptyDomainDataException.CheckString(phoneNumber, nameof(phoneNumber));
             NullOrEmptyDomainDataException.CheckString(email, nameof(email));
@@ -104,11 +104,11 @@ namespace Shop.Domain.UserAgg
                 throw new InvalidDomainDataException("ایمبل نامعتبر است");
 
             if (phoneNumber != PhoneNumber)
-                if (domainService.PhoneNumberIsExist(phoneNumber))
+                if (userDomainService.PhoneNumberIsExist(phoneNumber))
                     throw new InvalidDomainDataException("شماره موبایل تکراری است");
 
             if (email != Email)
-                if (domainService.IsEmailExist(email))
+                if (userDomainService.IsEmailExist(email))
                     throw new InvalidDomainDataException("ایمیل تکراری است");
         }
     }

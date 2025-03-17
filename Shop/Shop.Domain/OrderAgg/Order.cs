@@ -1,6 +1,5 @@
 ﻿using Common.Domain;
 using Common.Domain.Exceptions;
-using Shop.Domain.OrderAgg.Enums;
 using Shop.Domain.OrderAgg.ValueObjects;
 
 namespace Shop.Domain.OrderAgg

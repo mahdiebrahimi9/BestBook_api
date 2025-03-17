@@ -10,6 +10,7 @@ namespace Shop.Domain.SiteEntities
 {
     public class Slider : BaseEntity
     {
+        private Slider() { }
         public string Title { get; private set; }
         public string Link { get; private set; }
         public string ImageName { get; private set; }

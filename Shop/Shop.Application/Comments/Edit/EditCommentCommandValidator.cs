@@ -5,7 +5,7 @@ namespace Shop.Application.Comments.Edit
 {
     public class EditCommentCommandValidator : AbstractValidator<EditCommentCommand>
     {
-        EditCommentCommandValidator()
+      public  EditCommentCommandValidator()
         {
             RuleFor(r => r.text)
                 .MinimumLength(5)

@@ -18,6 +18,9 @@ namespace Shop.Infrastructure.Persistent.Ef.UsersAgg
             builder.OwnsMany(f => f.Addresses, option =>
             {
                 option.ToTable("Addresses", "User");
+                option.OwnsOne(f => f.PhoneNumber);
+
+
             });
 
             builder.OwnsMany(f => f.Roles, option =>

@@ -10,12 +10,12 @@ namespace Shop.Application.Users.Edit;
 public class EditUserCommandHandler : IBaseCommandHandler<EditUserCommand>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IDomainUserService _domainUserService;
+    private readonly IUserDomainService _userDomainService;
     private readonly IFileService _fileService;
-    public EditUserCommandHandler(IUserRepository userRepository, IDomainUserService domainUserService, IFileService fileService)
+    public EditUserCommandHandler(IUserRepository userRepository, IUserDomainService userDomainService, IFileService fileService)
     {
         _userRepository = userRepository;
-        _domainUserService = domainUserService;
+        _userDomainService = userDomainService;
         _fileService = fileService;
     }
     public async Task<OperationResult> Handle(EditUserCommand request, CancellationToken cancellationToken)
@@ -24,7 +24,7 @@ public class EditUserCommandHandler : IBaseCommandHandler<EditUserCommand>
         if (user == null)
             return OperationResult.NotFound();
         var oldAvatar = user.AvatarName;
-        user.Edit(request.Name, request.Family, request.PhoneNumber, request.Email, request.Gender, _domainUserService);
+        user.Edit(request.Name, request.Family, request.PhoneNumber, request.Email, request.Gender, _userDomainService);
 
         if (request.Avatar != null)
         {

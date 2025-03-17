@@ -13,6 +13,7 @@ namespace Shop.Domain.CategoryAgg
 {
     public class Category : AggregateRoot
     {
+        private Category (){}
         public string Title { get; private set; }
         public SeoData SeoData { get; private set; }
         public string Slug { get; private set; }

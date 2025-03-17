@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Shop.Application.Roles.Create;
 
-public class EditRoleCommandValidator : AbstractValidator<CreateRoleCommand>
+public class CreateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
 {
-    public EditRoleCommandValidator()
+    public CreateRoleCommandValidator()
     {
         RuleFor(r => r.title)
             .NotEmpty()

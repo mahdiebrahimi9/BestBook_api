@@ -4,6 +4,7 @@ namespace Shop.Domain.OrderAgg
 {
     public class OrderAddress : BaseEntity
     {
+        private OrderAddress() { }
         public OrderAddress(string shire, string city, string postalCode, string name, string family,
             string postalAddress, string phoneNumber, string nationalCode)
         {

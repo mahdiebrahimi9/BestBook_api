@@ -16,6 +16,6 @@ namespace Common.Domain.ValueObjects
                 throw new InvalidDomainDataException("شماره موبایل نامعتبر است");
             Value = value;
         }
-        public string Value { get; private set; }
+        public string Value { get; internal set; }
     }
 }

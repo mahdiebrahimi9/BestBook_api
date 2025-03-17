@@ -8,17 +8,17 @@ namespace Shop.Application.Users.Register;
 public class RegisterUserCommandHandler : IBaseCommandHandler<RegisterUserCommand>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IDomainUserService _domainUserService;
+    private readonly IUserDomainService _userDomainService;
 
-    public RegisterUserCommandHandler(IUserRepository userRepository, IDomainUserService domainUserService)
+    public RegisterUserCommandHandler(IUserRepository userRepository, IUserDomainService userDomainService)
     {
         _userRepository = userRepository;
-        _domainUserService = domainUserService;
+        _userDomainService = userDomainService;
     }
 
     public async Task<OperationResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
-        var user = User.RegisterUser(request.PhoneNumber.Value, request.Password, _domainUserService);
+        var user = User.RegisterUser(request.PhoneNumber.Value, request.Password, _userDomainService);
         _userRepository.Add(user);
         await _userRepository.Save();
         return OperationResult.Success();

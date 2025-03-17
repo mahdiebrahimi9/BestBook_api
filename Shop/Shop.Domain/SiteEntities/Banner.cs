@@ -11,6 +11,8 @@ namespace Shop.Domain.SiteEntities
 {
     public class Banner:BaseEntity
     {
+        private Banner() { }
+
         public string Link { get; private set; }
         public string ImageName { get; private set; }
         public BannerPosition Position { get; private set; }

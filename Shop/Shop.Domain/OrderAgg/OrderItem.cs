@@ -6,6 +6,7 @@ namespace Shop.Domain.OrderAgg
 {
     public class OrderItem : BaseEntity
     {
+       private OrderItem (){}
         public OrderItem(long inventoryId, int count, int price)
         {
             CountGuard(count);

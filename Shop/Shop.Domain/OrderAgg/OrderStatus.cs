@@ -1,4 +1,4 @@
-﻿namespace Shop.Domain.OrderAgg.Enums
+﻿namespace Shop.Domain.OrderAgg
 {
     public enum OrderStatus
     {
